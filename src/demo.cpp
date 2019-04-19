@@ -7,7 +7,7 @@ namespace logging = cq::logging; // 用于日志
 namespace message = cq::message; // 提供封装了的 Message 等类
 
 // 初始化 App Id
-CQ_INITIALIZE("com.example.demo");
+CQ_INITIALIZE("me.cqp.samarium.dicemaid");
 
 // 插件入口，在静态成员初始化之后，app::on_initialize 事件发生之前被执行，用于配置 SDK 和注册事件回调
 CQ_MAIN {

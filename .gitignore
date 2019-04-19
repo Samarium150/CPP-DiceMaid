@@ -1,8 +1,5 @@
 .vs
-.vscode/settings.json
-.vscode/c_cpp_properties.json
-.vscode/.ropeproject
-.vscode/ipch
+.vscode
 vcpkg
 build
 !lib/*.lib
