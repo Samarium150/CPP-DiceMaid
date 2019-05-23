@@ -24,7 +24,6 @@ CQ_MAIN {
 		} catch (const cq::exception::ApiError& err) {
 			cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code));
 		}
-		e.block();
 	};
 
 	cq::event::on_group_msg = [](const auto& e) {
@@ -67,7 +66,6 @@ CQ_MAIN {
 		} catch (const cq::exception::ApiError& err) {
 			cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code));
 		}
-		e.block();
 	};
 
 	cq::event::on_group_request = [](const auto& e) {
@@ -76,14 +74,12 @@ CQ_MAIN {
 			cq::Message message(Maid::get_help());
 			cq::api::send_group_msg(e.group_id, message);
 		}
-		e.block();
 	};
 
 	cq::event::on_friend_request = [](const auto& e) {
 		cq::api::set_friend_add_request(e.flag, cq::request::Operation::APPROVE, "");
 		cq::Message message(Maid::get_help());
 		cq::api::send_private_msg(e.user_id, message);
-		e.block();
 	};
 
 	cq::event::on_group_member_increase = [](const auto& e) {
@@ -98,7 +94,6 @@ CQ_MAIN {
 				cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code));
 			}
 		}
-		e.block();
 	};
 
 	cq::event::on_group_member_decrease = [](const auto& e) {
@@ -113,7 +108,6 @@ CQ_MAIN {
 				cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code));
 			}
 		}
-		e.block();
 	};
 }
 

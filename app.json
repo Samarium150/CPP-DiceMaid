@@ -2,7 +2,7 @@
     "ret": 1,
     "apiver": 9,
     "name": "dice_maid",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "version_id": 1,
     "author": "Samarium",
     "description": "这是CoolQ C++ SDK的一个骰娘插件",
