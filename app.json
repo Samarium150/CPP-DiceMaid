@@ -1,11 +1,11 @@
 {
     "ret": 1,
     "apiver": 9,
-    "name": "Demo",
-    "version": "1.0.0",
+    "name": "dice_maid",
+    "version": "1.1.0",
     "version_id": 1,
-    "author": "Your Name",
-    "description": "这是 CoolQ C++ SDK 的一个 Demo。",
+    "author": "Samarium",
+    "description": "这是CoolQ C++ SDK的一个骰娘插件",
     "event": [
         {
             "id": 1003,
@@ -107,14 +107,7 @@
         }
     ],
     "menu": [
-        {
-            "name": "菜单 1",
-            "function": "menu_demo_1"
-        },
-        {
-            "name": "菜单 2",
-            "function": "menu_demo_2"
-        }
+        
     ],
     "status": [],
     "auth": [
@@ -131,13 +124,13 @@
         // 124, // setGroupAnonymousBan
         // 125, // setGroupAnonymous
         // 126, // setGroupCard
-        // 127, // setGroupLeave
+        127, // setGroupLeave
         // 128, // setGroupSpecialTitle
         130, // getGroupMemberInfoV2 / getGroupMemberInfo
         131, // getStrangerInfo
         // 140, // setDiscussLeave
-        // 150, // setFriendAddRequest
-        // 151, // setGroupAddRequest
+        150, // setFriendAddRequest
+        151, // setGroupAddRequest
         160, // getGroupMemberList
         161, // getGroupList
         180 // deleteMsg

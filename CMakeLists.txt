@@ -26,6 +26,7 @@ set(APP_ID "\"${APP_ID}\"")
 add_compile_definitions(APP_ID=${APP_ID})
 
 find_package(unofficial-iconv CONFIG REQUIRED)
+find_package(boost REQUIRED)
 
 include(FixLinkConflict)
 
@@ -34,6 +35,7 @@ set(LIB_NAME "app")
 add_library(${LIB_NAME} SHARED ${SOURCE_FILES})
 
 target_link_libraries(${LIB_NAME} PRIVATE unofficial::iconv::libiconv unofficial::iconv::libcharset)
+target_link_libraries(${LIB_NAME} ${Boost_LIBRARIES})
 
 cotire(${LIB_NAME})
 
