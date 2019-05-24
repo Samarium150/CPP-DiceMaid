@@ -8,7 +8,10 @@ cq::GroupRole get_member_role(const int64_t group_id, const int64_t user_id);
 
 CQ_MAIN {
 
-	cq::app::on_enable = [] { cq::logging::info(u8"启用", u8"插件已启动"); };
+	cq::app::on_enable = [] {
+		Dice::init();
+		cq::logging::info(u8"启用", u8"插件已启动"); 
+	};
 
 	cq::app::on_disable = [] { cq::logging::info(u8"停用", u8"插件已停止"); };
 
@@ -28,7 +31,7 @@ CQ_MAIN {
 
 	cq::event::on_group_msg = [](const auto& e) {
 		try {
-			regex  hidden("^>h[^e]"), dissmiss("^>!dissmiss\\s\\d+$"), jrrp("^>jrrp$"), set("^>set.*");
+			regex  hidden("^#h[^e]"), dissmiss("^#!dissmiss\\s\\d+$"), jrrp("^#jrrp$"), set("^#set.*");
 			smatch m_h, m_diss, m_jrrp, m_set;
 			string msg = string(e.message);
 			if (regex_match(msg, m_diss, dissmiss) && stoi(extract(msg, 1, ' ')) == cq::api::get_login_user_id()) {
@@ -50,15 +53,14 @@ CQ_MAIN {
 					cq::Message message(response);
 					cq::api::send_group_msg(e.group_id, message);
 				} else {
-					response = Maid::command(id, msg);
+					response = Maid::command(id, name, msg);
 					if (regex_search(msg, m_h, hidden) && response != "") {
 						cq::Message pri(response), pub(name);
 						pub += u8"进行了一次暗骰";
 						cq::api::send_private_msg(e.user_id, pri);
 						cq::api::send_group_msg(e.group_id, pub);
 					} else if (response != "") {
-						cq::Message message(name);
-						message += response;
+						cq::Message message(response);
 						cq::api::send_group_msg(e.group_id, message);
 					}
 				}
@@ -91,6 +93,13 @@ CQ_MAIN {
 			try {
 				cq::api::send_group_msg(e.group_id, message);
 			} catch (const cq::exception::ApiError& err) {
+				cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code));
+			}
+		} else {
+			try {
+				cq::Message info(Maid::get_info());
+				cq::api::send_group_msg(e.group_id, info);
+			} catch (const cq::exception::ApiError& err) { 
 				cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code));
 			}
 		}

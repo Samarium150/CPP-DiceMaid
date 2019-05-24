@@ -2,6 +2,7 @@
 #include "common.h"
 
 namespace Dice {
+	void init();
 	int roll(int times, int sides, int div);
 	string roll(int times, int sides, int div, bool output, int &s);
 	string check_result(int result, int skill, int type);

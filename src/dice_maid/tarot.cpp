@@ -62,8 +62,8 @@ string Tarot::major_meaning_b[22] = {
 };
 
 string Tarot::get_card() {
-	int n = random(0, 21);
-	int side = random(0, 9);
+	int n = common::random(0, 21);
+	int side = common::random(0, 9);
 	string number = numbers[n];
 	string card = major[n];
 	string meaning, flag;

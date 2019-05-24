@@ -8,5 +8,7 @@
 namespace Maid {
 	extern unordered_map<long, int> setting;
 	string get_help();
-    string command(long qq, string msg);
+	string get_info();
+    string command(long id, string msg);
+	string command(long id, string name, string msg);
 };

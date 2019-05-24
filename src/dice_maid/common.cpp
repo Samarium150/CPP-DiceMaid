@@ -12,13 +12,13 @@ string& strip(string& s) {
 	return s;
 }
 
-int random(int min, int max) {
+int common::random(int min, int max) {
 	uniform_int_distribution dist(min, max);
 	return dist(engine);
 }
 
-int random(int sides) {
-	return random(1, sides);
+int common::random(int sides) {
+	return common::random(1, sides);
 }
 
 static void _split(const string& s, char delim, vector<string>& elems) {

@@ -236,13 +236,13 @@ string Madness::mania[100] = {
 string Madness::get_symptom(int type) {
 	stringstream result;
 	result << "疯狂发作-";
-	int num = random(0, 9);
-	int time = random(0, 9) + 1;
+	int num = common::random(0, 9);
+	int time = common::random(10);
 	if (type == 0) result << "临时症状: 1d10=" << num << endl << mad_a[num];
 	else result << "总结症状: 1d10=" << num << endl << mad_b[num];
 
 	if (num >= 8) {
-		int sub = random(0, 99);
+		int sub = common::random(0, 99);
 		result << endl << "具体症状: 1d100=" << sub << endl;
 		if (num == 8) result << phobia[sub];
 		else result << mania[sub];
