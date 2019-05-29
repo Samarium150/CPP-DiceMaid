@@ -179,7 +179,7 @@ string Dice::toss(string msg, int type, int& s) {
 			temp = x->str();
 			n = stoi(temp);
 			result << n;
-			s += n;
+			if (type == 2) s += n;
 			return result.str();
 		}
 		if (n > 50) throw n;
