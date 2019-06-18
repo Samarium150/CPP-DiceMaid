@@ -152,7 +152,7 @@ string Dice::toss(string msg, int type, int& s) {
 		result << "=" << Dice::roll(n, d, div, true, s);
 	} else {
 		regex default_default("^d"), default_num("^d\\d+"), num_default("^\\d+d");
-		regex num_num("^\\d+d\\d+"), num("\\d");
+		regex num_num("^\\d+d\\d+"), num("^\\d+");
 
 		smatch m_dd, m_dn, m_nd, m_nn, m_d;
 		int	n = 1, d = 0, r = 0, div = 1;
@@ -240,7 +240,8 @@ string Dice::toss(string msg) {
 			if (i != v.size() - 1) result << "+";
 		}
 		result << ")";
-		if (div != 1) result << "/" << div;
+		if (div != 1) 
+			result << "/" << div;
 
 		result << "=" << floor(sum / div);
 		return result.str();

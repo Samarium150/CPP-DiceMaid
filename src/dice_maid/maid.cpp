@@ -7,8 +7,8 @@ unordered_map<long, int> Maid::setting;
 string Maid::get_info() {
 	stringstream info;
 	info << "Dice Maid by Samarium/941295333" << endl;
-	info << "Version: v1.1.6" << endl;
-	info << "更新日志: 修复了投掷多个骰子时常数会被多算一次的bug;" << endl;
+	info << "Version: v1.1.7" << endl;
+	info << "更新日志: 修复了投掷多个常数会出现1d0的bug;" << endl;
 	info << "使用#help查看帮助文档";
 	return info.str();
 }

@@ -18,7 +18,7 @@ int common::random(int min, int max) {
 }
 
 int common::random(int sides) {
-	return common::random(1, sides);
+	return (sides <= 0)? 0 : common::random(1, sides);
 }
 
 static void _split(const string& s, char delim, vector<string>& elems) {
