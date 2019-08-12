@@ -3,7 +3,7 @@
 using namespace std;
 using namespace boost::random;
 
-taus88 engine;
+mt19937 engine;
 
 string& strip(string& s) {
 	if (s.empty()) return s;

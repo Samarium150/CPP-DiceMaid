@@ -18,7 +18,7 @@
 using namespace std;
 using namespace boost::random;
 
-extern taus88 engine;
+extern mt19937 engine;
 
 namespace common {
 int random(int, int);

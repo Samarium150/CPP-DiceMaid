@@ -143,7 +143,7 @@ string Dice::toss(string msg, int type, int& s) {
 			temp = x->str();
 			n = stoi(extract(temp, 0, 'd'));
 			d = 100;
-		} else if (regex_search(msg, m_dd, default_default) || msg == ">h")
+		} else if (regex_search(msg, m_dd, default_default) || msg == "#h")
 			d = 100;
 
 		if (n > 50) throw n;

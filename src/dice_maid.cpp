@@ -31,7 +31,7 @@ CQ_MAIN {
 
 	cq::event::on_group_msg = [](const auto& e) {
 		try {
-			regex  hidden("^#h[^e]"), dissmiss("^#!dissmiss\\s\\d+$"), jrrp("^#jrrp$"), set("^#set.*");
+			regex  hidden("^#h"), dissmiss("^#!dissmiss\\s\\d+$"), jrrp("^#jrrp$"), set("^#set.*");
 			smatch m_h, m_diss, m_jrrp, m_set;
 			string msg = string(e.message);
 			if (regex_match(msg, m_diss, dissmiss) && stoi(extract(msg, 1, ' ')) == cq::api::get_login_user_id()) {
@@ -54,7 +54,7 @@ CQ_MAIN {
 					cq::api::send_group_msg(e.group_id, message);
 				} else {
 					response = Maid::command(id, name, msg);
-					if (regex_search(msg, m_h, hidden) && response != "") {
+					if (msg != "#help" && regex_search(msg, m_h, hidden) && response != "") {
 						cq::Message pri(response), pub(name);
 						pub += u8"进行了一次暗骰";
 						cq::api::send_private_msg(e.user_id, pri);
@@ -70,6 +70,35 @@ CQ_MAIN {
 		}
 	};
 
+	cq::event::on_group_member_increase = [](const auto& e) {
+		if (e.user_id != cq::api::get_login_user_id()) {
+			string name = get_member_name(e.group_id, e.user_id);
+			string welcomer = cq::api::get_login_nickname();
+			cq::Message message(welcomer);
+			message += "代表伟大的阿撒托斯, 欢迎新祭品" + name;
+			try {
+				cq::api::send_group_msg(e.group_id, message);
+			} catch (const cq::exception::ApiError& err) { cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code)); }
+		} else {
+			try {
+				cq::Message info(Maid::get_info());
+				cq::api::send_group_msg(e.group_id, info);
+			} catch (const cq::exception::ApiError& err) { cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code)); }
+		}
+	};
+
+	cq::event::on_group_member_decrease = [](const auto& e) {
+		if (e.user_id != cq::api::get_login_user_id()) {
+			string name = get_member_name(e.group_id, e.user_id);
+			string welcomer = cq::api::get_login_nickname();
+			cq::Message message(name);
+			message += "离我们而去, " + welcomer + "代表群组成员永远纪念";
+			try {
+				cq::api::send_group_msg(e.group_id, message);
+			} catch (const cq::exception::ApiError& err) { cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code)); }
+		}
+	};
+
 	cq::event::on_group_request = [](const auto& e) {
 		if (e.sub_type == 2) {
 			cq::api::set_group_add_request(e.flag, e.sub_type, cq::request::Operation::APPROVE);
@@ -82,41 +111,6 @@ CQ_MAIN {
 		cq::api::set_friend_add_request(e.flag, cq::request::Operation::APPROVE, "");
 		cq::Message message(Maid::get_help());
 		cq::api::send_private_msg(e.user_id, message);
-	};
-
-	cq::event::on_group_member_increase = [](const auto& e) {
-		if (e.user_id != cq::api::get_login_user_id()) {
-			string name = get_member_name(e.group_id, e.user_id);
-			string welcomer = cq::api::get_login_nickname();
-			cq::Message message(welcomer);
-			message += "代表伟大的阿撒托斯, 欢迎新祭品" + name;
-			try {
-				cq::api::send_group_msg(e.group_id, message);
-			} catch (const cq::exception::ApiError& err) {
-				cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code));
-			}
-		} else {
-			try {
-				cq::Message info(Maid::get_info());
-				cq::api::send_group_msg(e.group_id, info);
-			} catch (const cq::exception::ApiError& err) { 
-				cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code));
-			}
-		}
-	};
-
-	cq::event::on_group_member_decrease = [](const auto& e) {
-		if (e.user_id != cq::api::get_login_user_id()) {
-			string name	= get_member_name(e.group_id, e.user_id);
-			string welcomer = cq::api::get_login_nickname();
-			cq::Message message(name);
-			message += "离我们而去, " + welcomer + "代表群组成员永远纪念";
-			try {
-				cq::api::send_group_msg(e.group_id, message);
-			} catch (const cq::exception::ApiError& err) {
-				cq::logging::error(u8"API", u8"调用失败，错误码：" + std::to_string(err.code));
-			}
-		}
 	};
 }
 
